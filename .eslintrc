@@ -1,0 +1,42 @@
+{
+  "extends": ["eslint:recommended", "plugin:react/recommended"],
+  "parser": "babel-eslint",
+  "parserOptions": {
+    "ecmaVersion": 6,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
+  "plugins": ["react", "react-hooks"],
+  "globals": {
+    "document": true
+  },
+  "env": {
+    "es6": true,
+    "node": true
+  },
+  "rules": {
+    "camelcase": "error",
+    "max-len": [2, 80],
+    "no-console": [
+      "error", {
+        "allow": [
+          "error",
+          "info",
+          "warn"
+        ]
+      }
+    ],
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "warn",
+    "react/jsx-uses-react": "off",
+    "react/react-in-jsx-scope": "off",
+    "require-jsdoc": 0
+  },
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
+  }
+}
