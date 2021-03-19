@@ -1,0 +1,24 @@
+{
+  "name": "pearl-street-take-home",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "webpack serve"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ppak10/pearl-street-take-home.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ppak10/pearl-street-take-home/issues"
+  },
+  "homepage": "https://github.com/ppak10/pearl-street-take-home#readme",
+  "devDependencies": {
+    "webpack-cli": "^4.5.0",
+    "webpack-dev-server": "^3.11.2"
+  }
+}
