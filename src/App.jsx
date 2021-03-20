@@ -15,6 +15,9 @@ import {MAX_LEVELS, MIN_LEVELS} from './config';
 // Constants
 import SAMPLE_DATA from '../sample_data.json';
 
+// Components
+import Graph from './Graph';
+
 // Context
 import Context from './context';
 
@@ -31,9 +34,6 @@ export default function App() {
     // Also assumes all bus numbers are intended to be unique.
     dispatch(setBusNumbersSet(SAMPLE_DATA.buses.map((bus) => bus.number)));
   }, [dispatch]);
-
-  console.log('SAMPLE DATA', SAMPLE_DATA);
-  console.log('edge map', state.edgeMap);
 
   useEffect(() => {
     const edge = new Edge(SAMPLE_DATA);
@@ -79,6 +79,9 @@ export default function App() {
           value={state.levels}
         />
       </fieldset>
+      <ul>
+        <Graph busNumber={busNumber ? parseInt(busNumber) : undefined} />
+      </ul>
     </div>
   );
 }

@@ -7,6 +7,9 @@
 import {arrayOf, element, oneOfType} from 'prop-types';
 import {useReducer} from 'react';
 
+// Config
+import {MIN_LEVELS} from './config';
+
 // Context
 import Context from './context';
 
@@ -14,7 +17,7 @@ import Context from './context';
 const INITIAL_STATE = {
   busNumbersSet: new Set([]),
   edgeMap: new Map(),
-  levels: 1,
+  levels: MIN_LEVELS,
 };
 
 const reducer = (state, action) => {
