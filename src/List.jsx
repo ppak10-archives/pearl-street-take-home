@@ -37,9 +37,15 @@ export default function List({busNumber, level, parentBusNumber}) {
     />
   ));
 
+  const busNumberListItemJSX = state.busNumbersSet.has(busNumber) ? (
+    <li>{busNumber}</li>
+  ) : (
+    <del>{busNumber}</del>
+  );
+
   return (
     <>
-      <li>{busNumber}</li>
+      {busNumberListItemJSX}
       <ul>
         {listNodesJSX}
       </ul>

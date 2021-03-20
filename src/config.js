@@ -4,6 +4,8 @@
  */
 
 export const MIN_LEVELS = 1;
-export const MAX_LEVELS = 10;
+
+// Limits maximum levels for performance reasons.
+export const MAX_LEVELS = 5;
 
 export const INITIAL_VIEW_TYPE = 'LIST';

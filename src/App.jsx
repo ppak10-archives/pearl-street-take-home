@@ -34,7 +34,9 @@ export default function App() {
   useEffect(() => {
     // Maps through list of buses sample data to create set of bus numbers.
     // Also assumes all bus numbers are intended to be unique.
-    dispatch(setBusNumbersSet(SAMPLE_DATA.buses.map((bus) => bus.number)));
+    dispatch(
+      setBusNumbersSet(new Set(SAMPLE_DATA.buses.map((bus) => bus.number)))
+    );
   }, [dispatch]);
 
   useEffect(() => {
