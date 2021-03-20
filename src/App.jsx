@@ -4,43 +4,53 @@
  */
 
 // Node Modules
-import {useEffect, useState} from 'react';
+import {useContext, useEffect, useState} from 'react';
+
+// Actions
+import {setBusNumbersSet, setEdgeMap, setLevels} from './actions';
+
+// Config
+import {MAX_LEVELS, MIN_LEVELS} from './config';
 
 // Constants
-const MIN_LEVELS = 1;
-const MAX_LEVELS = 10;
-
 import SAMPLE_DATA from '../sample_data.json';
+
+// Context
+import Context from './context';
 
 // Utils
 import {Edge} from './utils';
 
 export default function App() {
   // Hooks
-  const [busNumbersSet, setBusNumbersSet] = useState(new Set([]));
-  const [edgeMap, setEdgeMap] = useState(new Map());
-  const [levels, setLevels] = useState(MIN_LEVELS);
+  const {state, dispatch} = useContext(Context);
   const [busNumber, setBusNumber] = useState('');
 
   useEffect(() => {
     // Maps through list of buses sample data to create set of bus numbers.
     // Also assumes all bus numbers are intended to be unique.
-    setBusNumbersSet(SAMPLE_DATA.buses.map((bus) => bus.number));
-  }, []);
+    dispatch(setBusNumbersSet(SAMPLE_DATA.buses.map((bus) => bus.number)));
+  }, [dispatch]);
 
   console.log('SAMPLE DATA', SAMPLE_DATA);
-  console.log('edge map', edgeMap);
+  console.log('edge map', state.edgeMap);
 
   useEffect(() => {
     const edge = new Edge(SAMPLE_DATA);
     edge.createMap();
-    setEdgeMap(edge.map);
-  }, []);
+    dispatch(setEdgeMap(edge.map));
+  }, [dispatch]);
+
+  // Callbacks
+  const handleLevelChange = (e) => {
+    dispatch(setLevels(e.target.value));
+  };
 
   // JSX
-  const busNumbersDatalistJSX = Array.from(busNumbersSet).map((busNumber) => (
-    <option key={busNumber} value={busNumber} />
-  ));
+  const busNumbersDatalistJSX = Array.from(state.busNumbersSet)
+    .map((busNumber) => (
+      <option key={busNumber} value={busNumber} />
+    ));
 
   return (
     <div>
@@ -64,9 +74,9 @@ export default function App() {
           min={MIN_LEVELS}
           max={MAX_LEVELS}
           name="levels"
-          onChange={(e) => setLevels(e.target.value)}
+          onChange={handleLevelChange}
           type="number"
-          value={levels}
+          value={state.levels}
         />
       </fieldset>
     </div>

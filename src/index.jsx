@@ -9,4 +9,12 @@ import {render} from 'react-dom';
 // Components
 import App from './App';
 
-render(<App />, document.getElementById('root'));
+// Provider
+import Provider from './Provider';
+
+render(
+  <Provider>
+    <App />
+  </Provider>,
+  document.getElementById('root')
+);
