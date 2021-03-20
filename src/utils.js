@@ -3,85 +3,55 @@
  * Utility functions used within components.
  */
 
-export function createEdgeMap(sampleData) {
-  const map = new Map();
+/**
+ * @description Creates map for edges utilizing provided lines and transformers.
+ */
+export class Edge {
+  constructor(sampleData) {
+    this.sampleData = sampleData;
+    this.map = new Map();
+  }
 
-  // Adds line values to edge map.
-  sampleData.lines.forEach((line) => {
-    const iBusNumbersSet = map.get(line.i);
-    const jBusNumbersSet = map.get(line.j);
+  updateBusNumbersSet(x, y) {
+    // Retreives set for bus numbers or creates new set if it doesn't exist.
+    const xBusNumbersSet = this.map.get(x) || new Set([y]);
+    const yBusNumbersSet = this.map.get(y) || new Set([x]);
 
-    if (iBusNumbersSet) {
-      // Adds `j` value to set and sets set to map.
-      iBusNumbersSet.add(line.j);
-      map.set(line.i, iBusNumbersSet);
-    } else {
-      // Creates new set with `j` value if `i` key is not set.
-      map.set(line.i, new Set([line.j]));
+    if (xBusNumbersSet) {
+      // Adds `y` value to xBusNumberSet and sets this to map with key `x`.
+      xBusNumbersSet.add(y);
     }
+
+    this.map.set(x, xBusNumbersSet);
 
     // Repeats process for other end of edge for fast lookup.
-    if (jBusNumbersSet) {
-      // Adds `i` value to set and sets set to map.
-      jBusNumbersSet.add(line.i);
-      map.set(line.j, jBusNumbersSet);
-    } else {
-      // Creates new set with `i` value if `j` key is not set.
-      map.set(line.j, new Set([line.i]));
-    }
-  });
-
-  // Adds transformers values to edge map.
-  sampleData.transformers.forEach((transformer) => {
-    const iBusNumbersSet = map.get(transformer.i);
-    const jBusNumbersSet = map.get(transformer.j);
-
-    if (iBusNumbersSet) {
-      // Adds `j` value to set and sets set to map.
-      iBusNumbersSet.add(transformer.j);
-      map.set(transformer.i, iBusNumbersSet);
-    } else {
-      // Creates new set with `j` value if `i` key is not set.
-      map.set(transformer.i, new Set([transformer.j]));
+    if (yBusNumbersSet) {
+      // Adds `x` value to yBusNumberSet and sets this to map with key `y`.
+      yBusNumbersSet.add(x);
     }
 
-    // Repeats process for other end of edge for fast lookup.
-    if (jBusNumbersSet) {
-      // Adds `i` value to set and sets set to map.
-      jBusNumbersSet.add(transformer.i);
-      map.set(transformer.j, jBusNumbersSet);
-    } else {
-      // Creates new set with `i` value if `j` key is not set.
-      map.set(transformer.j, new Set([transformer.i]));
-    }
+    this.map.set(y, yBusNumbersSet);
+  }
 
-    // Applies additional edge values if k value is not `0`.
-    if (transformer.k) {
-      [transformer.i, transformer.j].forEach((x) => {
-        const kBusNumbersSet = map.get(transformer.k);
-        const xBusNumbersSet = map.get(x)
+  createMap() {
+    // Adds line values to edge map.
+    this.sampleData.lines.forEach((line) => {
+      // Handles cases for `i-j` and `j-i`.
+      this.updateBusNumbersSet(line.i, line.j);
+    });
 
-        if (kBusNumbersSet) {
-          // Adds `x` value to set and sets set to map.
-          kBusNumbersSet.add(x);
-          map.set(transformer.k, kBusNumbersSet);
-        } else {
-          // Creates new set with `j` value if `i` key is not set.
-          map.set(transformer.k, new Set([x]));
-        }
+    // Adds transformers values to edge map.
+    this.sampleData.transformers.forEach((transformer) => {
+      // Handles cases for `i-j` and `j-i`.
+      this.updateBusNumbersSet(transformer.i, transformer.j);
 
-        // Repeats process for other end of edge for fast lookup.
-        if (xBusNumbersSet) {
-          // Adds `k` value to set and sets set to map.
-          xBusNumbersSet.add(transformer.k);
-          map.set(x, xBusNumbersSet);
-        } else {
-          // Creates new set with `k` value if `x` key is not set.
-          map.set(x, new Set([transformer.k]));
-        }
-      });
-    }
-  });
-
-  return map;
+      // Applies additional edge values if k value is not `0`.
+      if (transformer.k) {
+        [transformer.i, transformer.j].forEach((x) => {
+          // Handles cases for `i-k` & `k-i` and `j-k` & `k-j`.
+          this.updateBusNumbersSet(x, transformer.k);
+        });
+      }
+    });
+  }
 }

@@ -13,7 +13,7 @@ const MAX_LEVELS = 10;
 import SAMPLE_DATA from '../sample_data.json';
 
 // Utils
-import {createEdgeMap} from './utils';
+import {Edge} from './utils';
 
 export default function App() {
   // Hooks
@@ -28,8 +28,13 @@ export default function App() {
     setBusNumbersSet(SAMPLE_DATA.buses.map((bus) => bus.number));
   }, []);
 
+  console.log('SAMPLE DATA', SAMPLE_DATA);
+  console.log('edge map', edgeMap);
+
   useEffect(() => {
-    setEdgeMap(createEdgeMap(SAMPLE_DATA));
+    const edge = new Edge(SAMPLE_DATA);
+    edge.createMap();
+    setEdgeMap(edge.map);
   }, []);
 
   // JSX
