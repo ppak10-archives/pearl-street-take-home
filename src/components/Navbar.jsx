@@ -7,16 +7,16 @@
 import {useContext} from 'react';
 
 // Actions
-import {setBusNumber, setLevels, setViewType} from './actions';
+import {setBusNumber, setLevels, setViewType} from '../actions';
 
 // Config
-import {MAX_LEVELS, MIN_LEVELS} from './config';
+import {MAX_LEVELS, MIN_LEVELS} from '../config';
 
 // Constants
-import APP from './constants.json';
+import APP from '../constants.json';
 
 // Context
-import Context from './context';
+import Context from '../context';
 
 export default function Navbar() {
   // Hooks
@@ -31,20 +31,6 @@ export default function Navbar() {
   return (
     <nav>
       <h1>{APP.VIEW_TYPE[state.viewType].title}</h1>
-      <div>
-        <button
-          disabled={'LIST' === state.viewType}
-          onClick={() => dispatch(setViewType('LIST'))}
-        >
-          List
-        </button>
-        <button
-          disabled={'GRAPH' === state.viewType}
-          onClick={() => dispatch(setViewType('GRAPH'))}
-        >
-          Graph
-        </button>
-      </div>
       <div className="navbar-input-fields">
         <fieldset>
           <legend>Bus Number</legend>
@@ -76,6 +62,20 @@ export default function Navbar() {
             value={state.levels}
           />
         </fieldset>
+      </div>
+      <div>
+        <button
+          disabled={'LIST' === state.viewType}
+          onClick={() => dispatch(setViewType('LIST'))}
+        >
+          List
+        </button>
+        <button
+          disabled={'GRAPH' === state.viewType}
+          onClick={() => dispatch(setViewType('GRAPH'))}
+        >
+          Graph
+        </button>
       </div>
     </nav>
   )

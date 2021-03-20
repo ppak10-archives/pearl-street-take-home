@@ -6,7 +6,7 @@
 export const setBusNumber = (busNumber) => ({
   type: 'SET_BUS_NUMBER',
   payload: {
-    busNumber: parseInt(busNumber),
+    busNumber,
   },
 });
 

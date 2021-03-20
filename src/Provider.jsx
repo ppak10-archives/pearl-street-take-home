@@ -15,7 +15,7 @@ import Context from './context';
 
 // Constants
 const INITIAL_STATE = {
-  busNumber: 0,
+  busNumber: '',
   busNumbersSet: new Set([]),
   edgeMap: new Map(),
   levels: MIN_LEVELS,

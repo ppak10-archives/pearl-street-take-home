@@ -13,9 +13,9 @@ import {setBusNumbersSet, setEdgeMap} from './actions';
 import SAMPLE_DATA from '../sample_data.json';
 
 // Components
-import List from './List';
-import Navbar from './Navbar';
-import Graph from './Graph';
+import Graph from './components/Graph';
+import List from './components/List';
+import Navbar from './components/Navbar';
 
 // Context
 import Context from './context';
