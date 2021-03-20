@@ -10,7 +10,10 @@
   },
   "plugins": ["react", "react-hooks"],
   "globals": {
-    "document": true
+    "describe": true,
+    "document": true,
+    "expect": true,
+    "test": true
   },
   "env": {
     "es6": true,
