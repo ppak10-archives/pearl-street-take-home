@@ -6,12 +6,16 @@
 // Node Modules
 import {useContext, useEffect, useRef, useState} from 'react';
 
+// Config
+import {
+  ANGLE_MOD,
+  CIRCLE_RADIUS,
+  FILL_TEXT_OFFSET,
+  LEVEL_RADIUS,
+  LINE_WIDTH,
+} from '../config';
+
 // Constants
-const ANGLE_MOD = 0.25;
-const CIRCLE_RADIUS = 25;
-const LEVEL_RADIUS = 150;
-const LINE_WIDTH = 2.5;
-const FILL_TEXT_OFFSET = 10;
 const TWO_PI = 2 * Math.PI
 
 // Context
@@ -49,7 +53,7 @@ export default function Graph() {
       const handleDrawCircle = (x, y, busNumber) => {
         ctx.beginPath();
         ctx.arc(x, y, CIRCLE_RADIUS, 0, TWO_PI, false);
-        ctx.fillStyle = 'green';
+        ctx.fillStyle = state.busNumbersSet.has(busNumber) ? 'green' : 'red';
         ctx.fill();
         ctx.lineWidth = LINE_WIDTH;
         ctx.strokeStyle = '#000000';
@@ -121,7 +125,14 @@ export default function Graph() {
         }
       }
     } 
-  }, [height, width, state.busNumber, state.edgeMap, state.levels]);
+  }, [
+    height,
+    state.busNumber,
+    state.busNumbersSet,
+    state.edgeMap,
+    state.levels,
+    width,
+  ]);
 
   return (
     <canvas ref={ref} height={height} width={width} />

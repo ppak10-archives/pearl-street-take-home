@@ -10,6 +10,9 @@ import {number, oneOfType, string} from 'prop-types';
 // Context
 import Context from '../context';
 
+// Config
+import {DISPLAY_PARENT} from '../config';
+
 export default function List({busNumber, level, parentBusNumber}) {
   // Hooks
   const {state} = useContext(Context);
@@ -19,8 +22,15 @@ export default function List({busNumber, level, parentBusNumber}) {
     const busNumbersSet = state.edgeMap.get(parseInt(busNumber));
     if (busNumbersSet) {
       setBusNumbers(
-        // Filters out parent bus number from bus number array.
-        Array.from(busNumbersSet).filter((number) => parentBusNumber !== number)
+        // Uses config to determine wheter to filters out parent bus number
+        // values from bus number array.
+        DISPLAY_PARENT ? (
+          Array.from(busNumbersSet)
+        ) : (
+          Array.from(busNumbersSet).filter(
+            (number) => parentBusNumber !== number
+          )
+        )
       );
     } else {
       setBusNumbers([]);
