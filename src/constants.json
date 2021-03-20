@@ -1,0 +1,10 @@
+{
+  "VIEW_TYPE": {
+    "LIST": {
+      "title": "List view of nodes"
+    },
+    "GRAPH": {
+      "title": "Graph view of nodes"
+    }
+  }
+}

@@ -10,13 +10,14 @@ import {useContext, useEffect, useState} from 'react';
 import {setBusNumbersSet, setEdgeMap, setLevels} from './actions';
 
 // Config
-import {MAX_LEVELS, MIN_LEVELS} from './config';
+import {MAX_LEVELS, MIN_LEVELS, INITIAL_VIEW_TYPE} from './config';
 
 // Constants
 import SAMPLE_DATA from '../sample_data.json';
+import APP from './constants.json';
 
 // Components
-import Graph from './Graph';
+import List from './List';
 
 // Context
 import Context from './context';
@@ -28,6 +29,7 @@ export default function App() {
   // Hooks
   const {state, dispatch} = useContext(Context);
   const [busNumber, setBusNumber] = useState('');
+  const [viewType, setViewType] = useState(INITIAL_VIEW_TYPE);
 
   useEffect(() => {
     // Maps through list of buses sample data to create set of bus numbers.
@@ -52,9 +54,29 @@ export default function App() {
       <option key={busNumber} value={busNumber} />
     ));
 
+  const listNodesJSX = viewType === 'LIST' && (
+    <ul>
+      <List busNumber={busNumber ? parseInt(busNumber) : undefined} />
+    </ul>
+  );
+
   return (
     <div>
-      <h1>Rough Graph</h1>
+      <h1>{APP.VIEW_TYPE[viewType].title}</h1>
+      <div>
+        <button
+          disabled={'LIST' === viewType}
+          onClick={() => setViewType('LIST')}
+        >
+          List
+        </button>
+        <button
+          disabled={'GRAPH' === viewType}
+          onClick={() => setViewType('GRAPH')}
+        >
+          Graph
+        </button>
+      </div>
       <fieldset>
         <legend>Bus Number</legend>
         <input
@@ -73,15 +95,19 @@ export default function App() {
         <input
           min={MIN_LEVELS}
           max={MAX_LEVELS}
-          name="levels"
           onChange={handleLevelChange}
           type="number"
           value={state.levels}
         />
+        <input
+          min={MIN_LEVELS}
+          max={MAX_LEVELS}
+          onChange={handleLevelChange}
+          type="range"
+          value={state.levels}
+        />
       </fieldset>
-      <ul>
-        <Graph busNumber={busNumber ? parseInt(busNumber) : undefined} />
-      </ul>
+      {listNodesJSX}
     </div>
   );
 }
