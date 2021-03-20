@@ -12,6 +12,9 @@ import App from './App';
 // Provider
 import Provider from './Provider';
 
+// Styles
+import './main.css';
+
 render(
   <Provider>
     <App />

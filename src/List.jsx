@@ -1,6 +1,6 @@
 /**
  * List.jsx
- * List component display bus number and children.
+ * List component to display bus number and children.
  */
 
 // Node Modules
@@ -37,6 +37,7 @@ export default function List({busNumber, level, parentBusNumber}) {
     />
   ));
 
+  // Indicates non-existant bus number with strikethrough.
   const busNumberListItemJSX = state.busNumbersSet.has(busNumber) ? (
     <li>{busNumber}</li>
   ) : (

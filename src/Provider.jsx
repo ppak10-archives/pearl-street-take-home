@@ -8,20 +8,27 @@ import {arrayOf, element, oneOfType} from 'prop-types';
 import {useReducer} from 'react';
 
 // Config
-import {MIN_LEVELS} from './config';
+import {MIN_LEVELS, INITIAL_VIEW_TYPE} from './config';
 
 // Context
 import Context from './context';
 
 // Constants
 const INITIAL_STATE = {
+  busNumber: 0,
   busNumbersSet: new Set([]),
   edgeMap: new Map(),
   levels: MIN_LEVELS,
+  viewType: INITIAL_VIEW_TYPE,
 };
 
 const reducer = (state, action) => {
   switch (action.type) {
+    case 'SET_BUS_NUMBER':
+      return {
+        ...state,
+        busNumber: action.payload.busNumber,
+      }
     case 'SET_BUS_NUMBERS_SET':
       return {
         ...state,
@@ -36,6 +43,11 @@ const reducer = (state, action) => {
       return {
         ...state,
         levels: action.payload.levels,
+      };
+    case 'SET_VIEW_TYPE':
+      return {
+        ...state,
+        viewType: action.payload.viewType,
       };
     default:
       return state;
